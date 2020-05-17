@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart' show BoxDecoration, Colors, SizedBox;
+import 'package:flutter/material.dart' show BoxDecoration, BuildContext, Colors, MediaQuery, SizedBox, Theme;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
 
 class Helper {
+  static bool isDarkMode;
   static SizedBox get sizedBoxH5 => SizedBox(height: 5);
   static SizedBox get sizedBoxH10 => SizedBox(height: 10);
   static SizedBox get sizedBoxH20 => SizedBox(height: 20);
@@ -13,8 +14,8 @@ class Helper {
   static SizedBox get sizedBoxW10 => SizedBox(width: 10);
   static SizedBox get sizedBoxW20 => SizedBox(width: 20);
 
-  static BoxDecoration get buildBoxDecoration =>
-      BoxDecoration(color: Colors.white, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);
+  static BoxDecoration buildBoxDecoration(BuildContext context) =>
+      BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);
 
   static BoxDecoration get buildOnboardingBoxDecoration =>
       BoxDecoration(color: Colors.white, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);

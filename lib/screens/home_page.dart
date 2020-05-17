@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BuildContext, Column, EdgeInsets, Padding, Scaffold, SingleChildScrollView, State, StatefulWidget, Theme, Widget;
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:prayertimes/ui/widgets/app_bar.dart' show CustomAppBar;
 import 'package:prayertimes/ui/widgets/bottom_bar.dart' show CustomBottomNavigationBar;

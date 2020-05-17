@@ -12,7 +12,7 @@ class IftarTimeContanier extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: Helper.buildBoxDecoration,
+      decoration: Helper.buildBoxDecoration(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(

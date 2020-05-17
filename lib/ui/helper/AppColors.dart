@@ -4,6 +4,7 @@ class AppColors {
   // Light Color
   static final Color colorLightPrimary = Color(0xFF5C93C4);
   static final Color colorLightSecondary = Color(0xFFF9F6E5);
+  static final Color colorLightCardColors = Color(0xFFFFFFFF);
   // #Light Color
 
 // Light Color

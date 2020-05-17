@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
-import 'package:prayertimes/ui/styles/appTextStyles.dart' show AppTextStyles;
 
 import 'appLogo.dart' show AppLogo;
 import 'helper.dart' show Helper;
@@ -13,7 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(110.0),
       child: Container(
-        decoration: _buildBoxDecoration,
+        decoration: _buildBoxDecoration(context),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -22,9 +21,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                AppLogo(color: Theme.of(context).primaryColor, height: 30),
+                AppLogo(color: Theme.of(context).iconTheme.color, height: 30),
                 Helper.sizedBoxW20,
-                Text(AppStrings.appName, style: AppTextStyles.appBarTextStyles),
+                Text(AppStrings.appName, style: Theme.of(context).textTheme.headline4),
               ],
             ),
           ),
@@ -33,8 +32,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  BoxDecoration get _buildBoxDecoration =>
-      BoxDecoration(color: Colors.white, borderRadius: AppBorderRadius.appBarRadius, boxShadow: [AppBoxShadow.materialShadow]);
+  BoxDecoration _buildBoxDecoration(BuildContext context) =>
+      BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.appBarRadius, boxShadow: [AppBoxShadow.materialShadow]);
 
   @override
   Size get preferredSize => Size.fromHeight(90.0);

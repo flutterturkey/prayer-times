@@ -4,7 +4,7 @@ import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 
 import 'screens/home_page.dart' show HomePage;
 import 'ui/helper/AppStrings.dart' show AppStrings;
-import 'ui/theme/theme.dart' show themeData;
+import 'ui/theme/theme.dart' show themeDarkData, themeLightData;
 
 void main() => runApp(MyApp());
 
@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]);
     initializeDateFormatting('tr');
     return MaterialApp(
-      theme: themeData,
+      theme: themeLightData,
+      darkTheme: themeDarkData,
       themeMode: ThemeMode.dark,
-      darkTheme: themeData,
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       home: HomePage(),

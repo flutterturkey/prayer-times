@@ -23,7 +23,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   String selectedDistrict = "";
   String selectedDistrictId = "";
   int index = 0;
-  bool _isSelectedCity = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: AppColors.colorAlertDialogBack,
+            backgroundColor: Theme.of(context).cardColor,
             shape: AppBorderRadius.alertDialogRadius,
             title: Text(AppStrings.changeLocation, style: Theme.of(context).textTheme.headline6),
             content: Form(
@@ -101,7 +100,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                         FlatButton(shape: AppBorderRadius.alertDialogRadius, child: Text(AppStrings.cancel), onPressed: () => clickCancelBtn()),
                         Helper.sizedBoxW10,
                         FlatButton(
-                          color: Theme.of(context).primaryColor.withOpacity(0.30),
+                          color: Theme.of(context).iconTheme.color.withOpacity(0.30),
                           shape: AppBorderRadius.alertDialogRadius,
                           child: Text(AppStrings.add),
                           onPressed: () => clickAddBtn(),
