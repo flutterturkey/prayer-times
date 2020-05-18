@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart' show Align, Alignment, AnimatedContainer, BorderRadius, BoxDecoration, BoxShape, BuildContext, Center, ClampingScrollPhysics, Color, Colors, Column, Container, CrossAxisAlignment, Curves, EdgeInsets, Expanded, FloatingActionButton, FractionalOffset, Icon, IconData, Icons, MainAxisAlignment, MediaQuery, Padding, PageController, PageView, RadialGradient, Radius, Row, SafeArea, Scaffold, Stack, State, StatefulWidget, Text, TextAlign, TextStyle, Theme, Widget;
+import 'package:flutter/material.dart';
 import 'package:prayertimes/models/onboarding_model.dart' show OnboardingModel;
+import 'package:prayertimes/screens/home_page.dart' show HomePage;
 import 'package:prayertimes/ui/helper/AppColors.dart' show AppColors;
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
 import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/widgets/appLogo.dart' show AppLogo;
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   @override
@@ -14,7 +16,39 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController(initialPage: 0);
+  SharedPreferences sharedPreferences;
   int _currentPage = 0;
+  bool _isDone = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getLocalData();
+  }
+
+  void _onIntroEnd(context) {
+    setLocalData();
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => HomePage()));
+  }
+
+  Future<void> getLocalData() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      _isDone = sharedPreferences.getBool("oneTime");
+    });
+    _isDone ? _pushHome() : _pushOnboarding();
+  }
+
+  void setLocalData() {
+    setState(() {
+      _isDone = true;
+      sharedPreferences.setBool("oneTime", _isDone);
+    });
+  }
+
+  void _pushHome() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+  void _pushOnboarding() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
+
   List<OnboardingModel> pages = [
     OnboardingModel(
       title: AppStrings.onboardingTitle1,
@@ -45,16 +79,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return children;
   }
 
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: 8.0,
-      decoration: _buildIndicatorBoxDecoration(isActive),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +96,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 children: <Widget>[
                   Helper.sizedBoxH20,
                   Container(
-                    height: 580.0,
+                    height: 560.0,
                     child: PageView(
                         physics: ClampingScrollPhysics(),
                         controller: _pageController,
@@ -99,9 +123,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: FloatingActionButton.extended(
+            tooltip: _label,
             shape: AppBorderRadius.fabRadius,
             icon: Icon(_icon, color: Colors.white),
-            onPressed: () => _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeOutSine),
+            onPressed: () => _currentPage == pages.length - 1
+                ? _onIntroEnd(context)
+                : _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeOutSine),
             label: Text(_label, style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -111,46 +138,60 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _showPageData(OnboardingModel page) {
     return Padding(
-      padding: EdgeInsets.all(40.0),
+      padding: EdgeInsets.all(30.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Center(
             child: Container(
-              decoration: Helper.buildOnboardingBoxDecoration,
-              height: 500.0,
+              decoration: Helper.buildOnboardingBoxDecoration(context),
+              height: 480.0,
               width: 327.0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 68.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        buildLoadingContainer(238, Theme.of(context).primaryColor.withOpacity(0.14)),
-                        buildLoadingContainer(192, Theme.of(context).primaryColor.withOpacity(0.29)),
-                        buildLoadingContainer(140, Theme.of(context).primaryColor),
-                        Container(child: page.icon, height: 50),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Helper.sizedBoxH30,
-                        Text(page.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline4),
-                        Helper.sizedBoxH10,
-                        Text(page.description, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5),
-                      ],
-                    ),
-                    Helper.sizedBoxH80,
-                  ],
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          buildLoadingContainer(238, Theme.of(context).dividerColor.withOpacity(0.14)),
+                          buildLoadingContainer(192, Theme.of(context).dividerColor.withOpacity(0.29)),
+                          buildLoadingContainer(140, Theme.of(context).dividerColor),
+                          Container(child: page.icon, height: 50),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            Helper.sizedBoxH30,
+                            Text(page.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline4),
+                            Helper.sizedBoxH10,
+                            Text(page.description, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      height: 8.0,
+      width: 8.0,
+      decoration: _buildIndicatorBoxDecoration(isActive),
     );
   }
 

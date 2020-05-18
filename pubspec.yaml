@@ -20,12 +20,13 @@ dependencies:
   intl: ^0.16.1
   carousel_slider: ^2.1.0
   flutter_typeahead: ^1.8.1
+  shared_preferences: ^0.5.7+2
   flutter_launcher_icons: ^0.7.5
   http: ^0.12.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  pedantic: ^1.8.0
+
 
 
 flutter_icons:

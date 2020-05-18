@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show BoxDecoration, BuildContext, Colors, MediaQuery, SizedBox, Theme;
+import 'package:flutter/material.dart' show BoxDecoration, BuildContext, SizedBox, Theme;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
 
@@ -17,6 +17,6 @@ class Helper {
   static BoxDecoration buildBoxDecoration(BuildContext context) =>
       BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);
 
-  static BoxDecoration get buildOnboardingBoxDecoration =>
-      BoxDecoration(color: Colors.white, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);
+  static BoxDecoration buildOnboardingBoxDecoration(BuildContext context) =>
+      BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.timeContainerRadius, boxShadow: [AppBoxShadow.containerBoxShadow]);
 }

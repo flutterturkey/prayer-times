@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart' show TextFieldConfiguration, TypeAheadFormField;
 import 'package:prayertimes/models/result.dart' show City, District, getCityData, getDistrictData;
-import 'package:prayertimes/ui/helper/AppColors.dart' show AppColors;
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
 import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
@@ -32,6 +31,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         borderRadius: AppBorderRadius.bottomBarRadius,
         child: Container(
           height: 80,
+          decoration: _buildBoxDecoration,
           child: BottomNavigationBar(
             currentIndex: 1,
             unselectedIconTheme: Theme.of(context).iconTheme,
@@ -211,5 +211,5 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 
   BoxDecoration get _buildBoxDecoration =>
-      BoxDecoration(color: Colors.white, borderRadius: AppBorderRadius.bottomBarRadius, boxShadow: [AppBoxShadow.materialShadow]);
+      BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.bottomBarRadius, boxShadow: [AppBoxShadow.materialShadow]);
 }

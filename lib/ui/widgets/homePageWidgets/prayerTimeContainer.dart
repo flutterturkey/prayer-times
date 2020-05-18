@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:prayertimes/ui/helper/AppColors.dart';
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
 import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 
@@ -12,7 +11,6 @@ class PrayerTimeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
     return Container(
       width: double.infinity,
       decoration: Helper.buildBoxDecoration(context),
