@@ -24,6 +24,7 @@ dependencies:
   flutter_launcher_icons: ^0.7.5
   http: ^0.12.1
   provider: 3.1.0+1
+  dotted_border: ^1.0.5
 
 
 dev_dependencies:

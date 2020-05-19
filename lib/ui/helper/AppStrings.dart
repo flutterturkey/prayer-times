@@ -43,12 +43,18 @@ class AppStrings {
   // #Change Location
 
   // Settings
+  static const String done = "Tamam";
   static const String settings = "Ayarlar";
+
   static const String selectTheme = "Tema Seç";
   static const String darkMode = "Koyu Mod";
   static const String lightMode = "Açık Mod";
   static const String systemMode = "Sistem Modu";
-  static const String done = "Tamam";
+
+  static const String selectLanguage = "Dil Seçin";
+  static const String turkish = "Türkçe";
+  static const String english = "İngilizce";
+
   // #Settings
 
   // Other

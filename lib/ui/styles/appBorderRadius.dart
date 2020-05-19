@@ -9,4 +9,5 @@ class AppBorderRadius {
   static RoundedRectangleBorder get fabRadius =>
       RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), topLeft: Radius.circular(30)));
   static RoundedRectangleBorder get alertDialogRadius => RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)));
+  static Radius get buttonRadius => Radius.circular(50);
 }
