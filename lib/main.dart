@@ -1,16 +1,26 @@
-import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, ThemeMode, Widget, WidgetsFlutterBinding, runApp;
+import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, WidgetsFlutterBinding, runApp;
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
+import 'package:prayertimes/ui/theme/dark_theme.dart';
+import 'package:prayertimes/ui/theme/light_theme.dart';
+import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
 
+import 'models/custom_theme_mode.dart' show CustomThemeMode;
 import 'screens/home_page.dart' show HomePage;
 import 'screens/onboarding_page.dart' show OnboardingPage;
 import 'ui/helper/AppStrings.dart' show AppStrings;
-import 'ui/theme/theme.dart' show themeDarkData, themeLightData;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(EzanVakti());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (context) => CustomThemeMode()),
+      ],
+      child: EzanVakti(),
+    ),
+  );
 }
 
 class EzanVakti extends StatelessWidget {
@@ -21,7 +31,7 @@ class EzanVakti extends StatelessWidget {
       title: AppStrings.appName,
       theme: themeLightData,
       darkTheme: themeDarkData,
-      themeMode: ThemeMode.dark,
+      themeMode: Provider.of<CustomThemeMode>(context).getThemeMode,
       debugShowCheckedModeBanner: false,
       initialRoute: '/onboarding',
       routes: {

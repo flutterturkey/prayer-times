@@ -16,7 +16,6 @@ class AppStrings {
   // Home Screen
   static const String ramazan = "Ramazan";
   static const String homePage = "Anasayfa";
-  static const String darkMode = "Koyu Mod";
   static const String location = "Konum";
   static const String timeToIftar = "İftara Kalan Süre";
   static const String hour = "Saat";
@@ -42,6 +41,15 @@ class AppStrings {
   static const String add = "Ekle";
   static const String errorCity = "Şehir Bulunamadı";
   // #Change Location
+
+  // Settings
+  static const String settings = "Ayarlar";
+  static const String selectTheme = "Tema Seç";
+  static const String darkMode = "Koyu Mod";
+  static const String lightMode = "Açık Mod";
+  static const String systemMode = "Sistem Modu";
+  static const String done = "Tamam";
+  // #Settings
 
   // Other
   static const String logoPath = "assets/svg/logo.svg";

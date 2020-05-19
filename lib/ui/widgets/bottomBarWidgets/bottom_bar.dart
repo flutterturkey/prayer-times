@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart' show TextFieldConfiguration, TypeAheadFormField;
+import 'package:prayertimes/models/custom_theme_mode.dart' show CustomThemeMode;
+import 'package:prayertimes/ui/widgets/bottomBarWidgets/bottomBarItem.dart';
+import 'package:prayertimes/ui/widgets/helper.dart';
+import 'package:provider/provider.dart' show Provider;
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
+
 import 'package:prayertimes/models/result.dart' show City, District, getCityData, getDistrictData;
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
 import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
-
-import 'helper.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   @override
@@ -16,12 +20,12 @@ class CustomBottomNavigationBar extends StatefulWidget {
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   final TextEditingController cityTextController = TextEditingController();
   final TextEditingController districtTextController = TextEditingController();
+  SharedPreferences sharedPreferences;
+
+  String selectedCity, selectedDistrict, selectedDistrictId = "";
+
   List<City> cityResult = [];
   List<District> districtResult = [];
-  String selectedCity = "";
-  String selectedDistrict = "";
-  String selectedDistrictId = "";
-  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,27 +36,63 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         child: Container(
           height: 80,
           decoration: _buildBoxDecoration,
-          child: BottomNavigationBar(
-            currentIndex: 1,
-            unselectedIconTheme: Theme.of(context).iconTheme,
-            selectedIconTheme: Theme.of(context).iconTheme,
-            items: <BottomNavigationBarItem>[
-              //BUG // TODO -> works when click on icon
-              BottomNavigationBarItem(
-                icon: SizedBox(
-                  width: 23,
-                  height: 23,
-                  child: IconButton(padding: new EdgeInsets.all(0.0), icon: Icon(AppIcons.location), onPressed: () => showSelectCity()),
-                ),
-                title: Text(AppStrings.location, style: Theme.of(context).textTheme.button),
-              ),
-              BottomNavigationBarItem(icon: Icon(AppIcons.home), title: Text(AppStrings.homePage, style: Theme.of(context).textTheme.button)),
-              BottomNavigationBarItem(icon: Icon(AppIcons.moon), title: Text(AppStrings.darkMode, style: Theme.of(context).textTheme.button)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              BottomBarItem(iconData: AppIcons.location, title: AppStrings.location, function: showSelectCity),
+              BottomBarItem(iconData: AppIcons.home, title: AppStrings.homePage, function: null),
+              BottomBarItem(iconData: AppIcons.settings, title: AppStrings.settings, function: showSettings),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void showSettings() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).cardColor,
+          shape: AppBorderRadius.alertDialogRadius,
+          title: Text(AppStrings.settings, style: Theme.of(context).textTheme.headline6),
+          content: Form(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.20,
+              width: MediaQuery.of(context).size.width * 0.80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(AppStrings.selectTheme),
+                  Helper.sizedBoxH10,
+                  Expanded(
+                    child: Row(
+                      children: [
+                        buildSettingsButton(context, AppStrings.lightMode, selectLightMode),
+                        Helper.sizedBoxW10,
+                        buildSettingsButton(context, AppStrings.darkMode, selectDarkMode),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Align(alignment: Alignment.bottomRight, child: buildSettingsButton(context, AppStrings.done, clickDoneBtn)),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void selectLightMode() => Provider.of<CustomThemeMode>(context).setThemeMode(ThemeMode.light);
+  void selectDarkMode() => Provider.of<CustomThemeMode>(context).setThemeMode(ThemeMode.dark);
+
+  void clickDoneBtn() {
+    Navigator.pop(context, true);
   }
 
   void showSelectCity() {
@@ -184,6 +224,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   void clickAddBtn() {
     print("selected id : " + selectedDistrictId);
+    Navigator.pop(context, true);
+  }
+
+  FlatButton buildSettingsButton(BuildContext context, String title, Function function) {
+    return FlatButton(
+      color: Theme.of(context).iconTheme.color.withOpacity(0.60),
+      shape: AppBorderRadius.alertDialogRadius,
+      child: Text(title),
+      onPressed: () => function(),
+    );
   }
 
   TextFieldConfiguration buildTextFieldConfiguration(BuildContext context, TextEditingController _typeAheadController, String _hintText) {
