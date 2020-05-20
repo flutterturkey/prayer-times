@@ -38,7 +38,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     });
     _isDone ? _pushHome() : _pushOnboarding();
   }
-  
+
   void setLocalData() {
     setState(() {
       _isDone = true;

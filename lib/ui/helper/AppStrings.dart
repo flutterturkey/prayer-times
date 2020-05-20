@@ -54,7 +54,6 @@ class AppStrings {
   static const String selectLanguage = "Dil Seçin";
   static const String turkish = "Türkçe";
   static const String english = "İngilizce";
-
   // #Settings
 
   // Other

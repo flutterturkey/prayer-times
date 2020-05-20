@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart' show Brightness, FloatingActionButtonThemeData, FontWeight, IconThemeData, TextTheme, ThemeData;
+import 'package:flutter/material.dart' show Brightness, FloatingActionButtonThemeData, FontWeight, IconThemeData, TextTheme, ThemeData, VisualDensity;
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 import 'package:prayertimes/ui/helper/AppColors.dart' show AppColors;
 
 final themeLightData = ThemeData(
+  visualDensity: VisualDensity.adaptivePlatformDensity,
   brightness: Brightness.light,
   primaryColor: AppColors.colorLightPrimary,
   accentColor: AppColors.colorLightSecondary,

@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, WidgetsFlutterBinding, runApp;
+import 'package:easy_localization/easy_localization.dart' show EasyLocalization;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
-import 'package:prayertimes/ui/theme/dark_theme.dart';
-import 'package:prayertimes/ui/theme/light_theme.dart';
 import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
+
+import 'package:prayertimes/ui/helper/AppConstants.dart' show AppConstants;
+import 'package:prayertimes/ui/theme/dark_theme.dart' show themeDarkData;
+import 'package:prayertimes/ui/theme/light_theme.dart' show themeLightData;
 
 import 'models/custom_theme_mode.dart' show CustomThemeMode;
 import 'screens/home_page.dart' show HomePage;
@@ -14,11 +17,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(builder: (context) => CustomThemeMode()),
+    EasyLocalization(
+      supportedLocales: [
+        AppConstants.TR_LOCALE,
+        AppConstants.EN_LOCALE,
       ],
-      child: EzanVakti(),
+      path: AppConstants.LANG_PATH,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(builder: (context) => CustomThemeMode()),
+        ],
+        child: EzanVakti(),
+      ),
     ),
   );
 }

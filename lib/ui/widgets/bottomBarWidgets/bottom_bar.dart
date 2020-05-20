@@ -103,7 +103,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               onPressed: () => setState(() {
                 theme.forEach((key, value) {
                   theme[key] = key == theme.keys.toList()[index] ? true : false;
-                  (theme.values.toList()[0] == true) ? selectLightMode() : (theme.values.toList()[1] == true) ? selectDarkMode() : selectDarkMode();
+                  (theme.values.toList()[0] == true) ? selectLightMode() : (theme.values.toList()[1] == true) ? selectDarkMode() : selectSystemThemeMode();
                 });
               }),
             );
@@ -139,6 +139,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   void selectLightMode() => Provider.of<CustomThemeMode>(context).setThemeMode(ThemeMode.light);
   void selectDarkMode() => Provider.of<CustomThemeMode>(context).setThemeMode(ThemeMode.dark);
+  void selectSystemThemeMode() => Provider.of<CustomThemeMode>(context).setThemeMode(ThemeMode.system);
 
   void clickDoneBtn() {
     Navigator.pop(context, true);

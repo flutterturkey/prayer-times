@@ -25,6 +25,7 @@ dependencies:
   http: ^0.12.1
   provider: 3.1.0+1
   dotted_border: ^1.0.5
+  easy_localization: ^2.3.2
 
 
 dev_dependencies:
@@ -43,3 +44,4 @@ flutter:
   assets:
     - assets/
     - assets/svg/
+    - assets/lang/
