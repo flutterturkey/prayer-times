@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart' show EasyLocalization;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
+import 'package:prayertimes/screens/splash_screen.dart';
 import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
 
 import 'package:prayertimes/ui/helper/AppConstants.dart' show AppConstants;
@@ -43,8 +44,9 @@ class EzanVakti extends StatelessWidget {
       darkTheme: themeDarkData,
       themeMode: Provider.of<CustomThemeMode>(context).getThemeMode,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/onboarding',
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => CustomSplashScreen(),
         '/home': (context) => HomePage(),
         '/onboarding': (context) => OnboardingPage(),
       },
