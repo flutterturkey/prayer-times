@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 final String baseUrl = 'https://ezanvakti.herokuapp.com/';
-final String cityURL = 'https://ezanvakti.herokuapp.com/sehirler?ulke=2';
-final String district = 'https://ezanvakti.herokuapp.com/ilceler?sehir=539';
-final String time = 'https://ezanvakti.herokuapp.com/vakitler?ilce=9335';
+final String cityURL = baseUrl + 'sehirler?ulke=2';
+final String district = baseUrl + 'ilceler?sehir=539';
+final String time = baseUrl + 'vakitler?ilce=9335';
 
 class City {
   String sehirAdi;

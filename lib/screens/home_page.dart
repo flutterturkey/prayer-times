@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    eveningTime = formatTime.parse('20:00');
     setState(() {
       _getPrayerTimeData();
       ramazanFunc();
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> hesapla() async {
     setState(() {
-      final now = DateTime.now();
+      now = DateTime.now();
       differenceInHours = ((eveningTime.difference(now).inHours) % 24).toString();
       differenceInMinutes = ((eveningTime.difference(now).inMinutes) % 60).toString();
       differenceInSec = ((eveningTime.difference(now).inSeconds) % 60).toString();
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Center buildLoadingIndicator(BuildContext context) {
+  Widget buildLoadingIndicator(BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(60.0),
@@ -105,6 +106,6 @@ class _HomePageState extends State<HomePage> {
     now = new DateTime.now();
     var ramazanStarting = new DateTime.utc(2020, 4, 24);
     differenceInDays = (now.difference(ramazanStarting).inDays).toString();
-    (now.difference(ramazanStarting).inDays) == 30 ? visibleRamazan = false : visibleRamazan = true;
+    visibleRamazan = (now.difference(ramazanStarting).inDays) == 30 ? false : true;
   }
 }

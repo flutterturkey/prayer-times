@@ -33,7 +33,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Padding(padding: const EdgeInsets.all(30.0), child: Center(child: Expanded(child: AppLogo(color: Theme.of(context).splashColor, height: 100)))),
+      body: Padding(padding: const EdgeInsets.all(30.0), child: Center(child: AppLogo(color: Theme.of(context).splashColor, height: 100))),
     );
   }
 

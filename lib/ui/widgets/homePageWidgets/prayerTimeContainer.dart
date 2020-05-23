@@ -58,7 +58,7 @@ class PrayerTimeContainer extends StatelessWidget {
   }
 
   Container tableWidget(BuildContext context, Widget _widget) =>
-      Container(height: MediaQuery.of(context).size.height / 20, child: Expanded(child: Container(padding: EdgeInsets.all(7), child: _widget)));
+      Container(height: MediaQuery.of(context).size.height / 20, child: Container(padding: EdgeInsets.all(7), child: _widget));
 
   SvgPicture imsak(Color color) => SvgPicture.asset(AppIcons.imsakSVG, color: color, height: 17);
   SvgPicture sun(Color color) => SvgPicture.asset(AppIcons.sunSVG, color: color, height: 17);

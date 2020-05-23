@@ -28,16 +28,16 @@ void main() async {
         providers: [
           ChangeNotifierProvider(builder: (context) => CustomThemeMode()),
         ],
-        child: EzanVakti(),
+        child: PrayerTimes(),
       ),
     ),
   );
 }
 
-class EzanVakti extends StatelessWidget {
+class PrayerTimes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('tr');
+    initializeDateFormatting('tr'); //TODO: create AppConstant.languageCode for locale and set 
     return MaterialApp(
       title: AppStrings.appName,
       theme: themeLightData,

@@ -36,7 +36,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
     setState(() {
       _isDone = sharedPreferences.getBool("oneTime");
     });
-    _isDone ? _pushHome() : _pushOnboarding();
   }
 
   void setLocalData() {
@@ -45,9 +44,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
       sharedPreferences.setBool("oneTime", _isDone);
     });
   }
-
-  void _pushHome() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-  void _pushOnboarding() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
 
   List<OnboardingModel> pages = [
     OnboardingModel(
@@ -116,7 +112,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-  Expanded buildButton(BuildContext context, String _label, IconData _icon) {
+  Widget buildButton(BuildContext context, String _label, IconData _icon) {
     return Expanded(
       child: Align(
         alignment: FractionalOffset.bottomRight,
@@ -149,33 +145,31 @@ class _OnboardingPageState extends State<OnboardingPage> {
               width: 327.0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 68.0),
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Stack(
-                        alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        buildLoadingContainer(238, Theme.of(context).dividerColor.withOpacity(0.14)),
+                        buildLoadingContainer(192, Theme.of(context).dividerColor.withOpacity(0.29)),
+                        buildLoadingContainer(140, Theme.of(context).dividerColor),
+                        Container(child: page.icon, height: 50),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
                         children: <Widget>[
-                          buildLoadingContainer(238, Theme.of(context).dividerColor.withOpacity(0.14)),
-                          buildLoadingContainer(192, Theme.of(context).dividerColor.withOpacity(0.29)),
-                          buildLoadingContainer(140, Theme.of(context).dividerColor),
-                          Container(child: page.icon, height: 50),
+                          Helper.sizedBoxH30,
+                          Text(page.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline4),
+                          Helper.sizedBoxH10,
+                          Text(page.description, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Helper.sizedBoxH30,
-                            Text(page.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline4),
-                            Helper.sizedBoxH10,
-                            Text(page.description, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
