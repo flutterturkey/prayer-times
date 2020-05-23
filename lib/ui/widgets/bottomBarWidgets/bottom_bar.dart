@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart' show TextFieldConfiguration, TypeAheadFormField;
 import 'package:prayertimes/models/custom_theme_mode.dart' show CustomThemeMode;
+import 'package:prayertimes/ui/helper/AppConstants.dart';
 import 'package:prayertimes/ui/widgets/bottomBarWidgets/select_button.dart';
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
 import 'package:provider/provider.dart' show Provider;
@@ -274,6 +275,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   void clickAddBtn() {
     print("selected id : " + selectedDistrictId);
+    AppConstants.districtID = selectedDistrictId;
     Navigator.pop(context, true);
   }
 

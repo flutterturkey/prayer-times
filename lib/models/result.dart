@@ -28,17 +28,19 @@ class District {
 }
 
 class PrayerTime {
-  String aksam;
-  String gunes;
-  String ikindi;
   String imsak;
+  String gunes;
+  String ogle;
+  String ikindi;
+  String aksam;
   String yatsi;
 
   PrayerTime({
-    this.aksam,
-    this.gunes,
-    this.ikindi,
     this.imsak,
+    this.gunes,
+    this.ogle,
+    this.ikindi,
+    this.aksam,
     this.yatsi,
   });
 }
@@ -87,10 +89,11 @@ Future<List<PrayerTime>> getPrayerTimeData(String ilceId) async {
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       PrayerTime _prayerTime = new PrayerTime(
-        aksam: data[i]["Aksam"],
-        gunes: data[i]["Gunes"],
-        ikindi: data[i]["Ikindi"],
         imsak: data[i]["Imsak"],
+        gunes: data[i]["Gunes"],
+        ogle: data[i]["Ogle"],
+        ikindi: data[i]["Ikindi"],
+        aksam: data[i]["Aksam"],
         yatsi: data[i]["Yatsi"],
       );
       prayerTime.add(_prayerTime);

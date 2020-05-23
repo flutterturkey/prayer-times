@@ -26,7 +26,7 @@ Open source design soon
 		- [ ] City by City Data
 	- [x] Dark Mode
 	- [ ] Notification of iftar/sahur time
-	- [ ] Prayer Time Tablo
+	- [x] Prayer Time Tablo
 - [ ] v1.0 Release
 	- [ ] API
 		- [ ] Country by Country Data

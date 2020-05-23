@@ -4,7 +4,7 @@ import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
 
 class IftarTimeContanier extends StatelessWidget {
-  final int hour, minute, second;
+  final String hour, minute, second;
 
   const IftarTimeContanier({Key key, @required this.hour, @required this.minute, @required this.second}) : super(key: key);
 
@@ -36,7 +36,7 @@ class IftarTimeContanier extends StatelessWidget {
     );
   }
 
-  Column buildTimeSection(BuildContext context, String subTitle, int time) {
+  Column buildTimeSection(BuildContext context, String subTitle, String time) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
