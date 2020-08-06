@@ -33,10 +33,16 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Padding(padding: const EdgeInsets.all(30.0), child: Center(child: AppLogo(color: Theme.of(context).splashColor, height: 100))),
+      body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Center(
+              child:
+                  AppLogo(color: Theme.of(context).splashColor, height: 100))),
     );
   }
 
-  void _pushHome() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-  void _pushOnboarding() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
+  void _pushHome() => Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => HomePage()));
+  void _pushOnboarding() => Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => OnboardingPage()));
 }

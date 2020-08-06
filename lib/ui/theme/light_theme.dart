@@ -21,6 +21,7 @@ final themeLightData = ThemeData(
     headline4: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorLightPrimary, fontSize: 24),
     headline5: GoogleFonts.openSans(fontWeight: FontWeight.w500, color: AppColors.colorStartedDescription, fontSize: 14),
     headline6: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorLightPrimary),
-    subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.w500, color: AppColors.colorLightPrimary, fontSize: 13),
+    subtitle1: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorLightPrimary, fontSize: 16),
+    subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorLightPrimary, fontSize: 16)
   ),
 );

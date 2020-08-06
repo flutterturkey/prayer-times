@@ -33,7 +33,11 @@ class _BottomBarItemState extends State<BottomBarItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(widget.iconData), Helper.sizedBoxH5, Text(widget.title, style: Theme.of(context).textTheme.button)],
+            children: [
+              Icon(widget.iconData),
+              Helper.sizedBoxH5,
+              Text(widget.title, style: Theme.of(context).textTheme.button)
+            ],
           ),
         ),
       ),
