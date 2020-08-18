@@ -1,9 +1,9 @@
 class Country {
-  String ulkeAdi;
-  String ulkeId;
+  String countryName;
+  String countryID;
 
   Country({
-    this.ulkeAdi,
-    this.ulkeId,
+    this.countryName,
+    this.countryID,
   });
 }

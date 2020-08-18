@@ -5,7 +5,6 @@ import 'package:prayertimes/ui/helper/AppIcons.dart';
 import 'package:prayertimes/ui/styles/appBorderRadius.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class NotificationDailog extends StatelessWidget {
   final String payload;
 
@@ -24,8 +23,7 @@ class NotificationDailog extends StatelessWidget {
       backgroundColor: Theme.of(context).cardColor,
       shape: AppBorderRadius.alertDialogRadius,
       title: Center(
-        child: Text(LocaleKeys.reminder.tr(),
-            style: Theme.of(context).textTheme.headline6),
+        child: Text(LocaleKeys.reminder.tr(), style: Theme.of(context).textTheme.headline6),
       ),
       content: Form(
         child: Container(
@@ -38,10 +36,8 @@ class NotificationDailog extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-                  buildLoadingContainer(
-                      150, Theme.of(context).dividerColor.withOpacity(0.14)),
-                  buildLoadingContainer(
-                      130, Theme.of(context).dividerColor.withOpacity(0.29)),
+                  buildLoadingContainer(150, Theme.of(context).dividerColor.withOpacity(0.14)),
+                  buildLoadingContainer(130, Theme.of(context).dividerColor.withOpacity(0.29)),
                   buildLoadingContainer(110, Theme.of(context).dividerColor),
                   Container(
                     child: _icon(Theme.of(context).cardColor, context),
@@ -51,8 +47,7 @@ class NotificationDailog extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  Text(prayer[payloadInt],
-                      style: Theme.of(context).textTheme.headline6),
+                  Text(prayer[payloadInt], style: Theme.of(context).textTheme.headline6),
                 ],
               ),
             ],
@@ -70,16 +65,11 @@ class NotificationDailog extends StatelessWidget {
     );
   }
 
-  SvgPicture imsak(Color color) =>
-      SvgPicture.asset(AppIcons.imsakSVG, color: color, height: 50);
-  SvgPicture sun(Color color) =>
-      SvgPicture.asset(AppIcons.sunSVG, color: color, height: 50);
-  SvgPicture noon(Color color) =>
-      SvgPicture.asset(AppIcons.noonSVG, color: color, height: 50);
-  SvgPicture afternoon(Color color) =>
-      SvgPicture.asset(AppIcons.afternoonSVG, color: color, height: 50);
-  SvgPicture evening(Color color) =>
-      SvgPicture.asset(AppIcons.eveningSVG, color: color, height: 50);
+  SvgPicture imsak(Color color) => SvgPicture.asset(AppIcons.imsakSVG, color: color, height: 50);
+  SvgPicture sun(Color color) => SvgPicture.asset(AppIcons.sunSVG, color: color, height: 50);
+  SvgPicture noon(Color color) => SvgPicture.asset(AppIcons.noonSVG, color: color, height: 50);
+  SvgPicture afternoon(Color color) => SvgPicture.asset(AppIcons.afternoonSVG, color: color, height: 50);
+  SvgPicture evening(Color color) => SvgPicture.asset(AppIcons.eveningSVG, color: color, height: 50);
 
   Widget _icon(Color color, BuildContext context) {
     switch (payload) {
@@ -102,18 +92,14 @@ class NotificationDailog extends StatelessWidget {
         {
           return evening(color);
         }
-        default:
+      default:
         {
           return Icon(AppIcons.moon, color: color, size: 50);
         }
     }
   }
 
-  Container buildLoadingContainer(double _size, Color _color) => Container(
-      height: _size,
-      width: _size,
-      decoration: _buildLoadingBoxDecoration(_color));
+  Container buildLoadingContainer(double _size, Color _color) => Container(height: _size, width: _size, decoration: _buildLoadingBoxDecoration(_color));
 
-  BoxDecoration _buildLoadingBoxDecoration(Color _color) =>
-      BoxDecoration(color: _color, shape: BoxShape.circle);
+  BoxDecoration _buildLoadingBoxDecoration(Color _color) => BoxDecoration(color: _color, shape: BoxShape.circle);
 }

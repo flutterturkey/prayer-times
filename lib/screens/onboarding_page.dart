@@ -5,8 +5,7 @@ import 'package:prayertimes/models/onboarding_model.dart' show OnboardingModel;
 import 'package:prayertimes/screens/home_page.dart' show HomePage;
 import 'package:prayertimes/ui/helper/AppColors.dart' show AppColors;
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
-import 'package:prayertimes/ui/styles/appBorderRadius.dart'
-    show AppBorderRadius;
+import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/widgets/appLogo.dart' show AppLogo;
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,33 +50,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
     OnboardingModel(
       title: LocaleKeys.getStarted.tr(),
       description: LocaleKeys.onboardingDescription1.tr(),
-      icon: AppLogo(color: AppColors.colorDarkPrimary, height: 100),
+      icon: AppLogo(color: AppColors.colorLightSecondary, height: 50),
     ),
     OnboardingModel(
       title: LocaleKeys.location.tr(),
       description: LocaleKeys.onboardingDescription2.tr(),
-      icon:
-          Icon(AppIcons.location, size: 100, color: AppColors.colorDarkPrimary),
+      icon: Icon(AppIcons.location, size: 50, color: AppColors.colorLightSecondary),
     ),
     OnboardingModel(
       title: LocaleKeys.notification.tr(),
       description: LocaleKeys.onboardingDescription3.tr(),
-      icon: Icon(AppIcons.notification,
-          size: 100, color: AppColors.colorDarkPrimary),
+      icon: Icon(AppIcons.notification, size: 50, color: AppColors.colorLightSecondary),
     ),
   ];
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
-    for (int i = 0; i < pages.length; i++)
-      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
+    for (int i = 0; i < pages.length; i++) list.add(i == _currentPage ? _indicator(true) : _indicator(false));
     return list;
   }
 
   List<Widget> buildOnboardingPages() {
     final children = <Widget>[];
-    for (int i = 0; i < pages.length; i++)
-      children.add(_showPageData(pages[i]));
+    for (int i = 0; i < pages.length; i++) children.add(_showPageData(pages[i]));
     return children;
   }
 
@@ -102,18 +97,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     child: PageView(
                         physics: ClampingScrollPhysics(),
                         controller: _pageController,
-                        onPageChanged: (int page) =>
-                            setState(() => _currentPage = page),
+                        onPageChanged: (int page) => setState(() => _currentPage = page),
                         children: buildOnboardingPages()),
                   ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildPageIndicator()),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: _buildPageIndicator()),
                   _currentPage != pages.length - 1
-                      ? buildButton(
-                          context, LocaleKeys.next.tr(), Icons.arrow_forward)
-                      : buildButton(
-                          context, LocaleKeys.start.tr(), Icons.check),
+                      ? buildButton(context, LocaleKeys.next.tr(), Icons.arrow_forward)
+                      : buildButton(context, LocaleKeys.start.tr(), Icons.check),
                 ],
               ),
             ),
@@ -135,9 +125,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             icon: Icon(_icon, color: Colors.white),
             onPressed: () => _currentPage == pages.length - 1
                 ? _onIntroEnd(context)
-                : _pageController.nextPage(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeOutSine),
+                : _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeOutSine),
             label: Text(_label, style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -165,12 +153,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
-                        buildLoadingContainer(238,
-                            Theme.of(context).dividerColor.withOpacity(0.14)),
-                        buildLoadingContainer(192,
-                            Theme.of(context).dividerColor.withOpacity(0.29)),
-                        buildLoadingContainer(
-                            140, Theme.of(context).dividerColor),
+                        buildLoadingContainer(238, Theme.of(context).dividerColor.withOpacity(0.14)),
+                        buildLoadingContainer(192, Theme.of(context).dividerColor.withOpacity(0.29)),
+                        buildLoadingContainer(140, Theme.of(context).dividerColor),
                         Container(child: page.icon, height: 100),
                       ],
                     ),
@@ -179,13 +164,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Column(
                         children: <Widget>[
                           Helper.sizedBoxH30,
-                          Text(page.title,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline4),
+                          Text(page.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline4),
                           Helper.sizedBoxH10,
-                          Text(page.description,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline5),
+                          Text(page.description, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline5),
                         ],
                       ),
                     ),
@@ -209,22 +190,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-  Container buildLoadingContainer(double _size, Color _color) => Container(
-      height: _size,
-      width: _size,
-      decoration: _buildLoadingBoxDecoration(_color));
+  Container buildLoadingContainer(double _size, Color _color) => Container(height: _size, width: _size, decoration: _buildLoadingBoxDecoration(_color));
 
-  BoxDecoration _buildLoadingBoxDecoration(Color _color) =>
-      BoxDecoration(color: _color, shape: BoxShape.circle);
+  BoxDecoration _buildLoadingBoxDecoration(Color _color) => BoxDecoration(color: _color, shape: BoxShape.circle);
 
-  BoxDecoration _buildIndicatorBoxDecoration(bool isActive) => BoxDecoration(
-      color: isActive ? AppColors.colorStarted : AppColors.colorStartedShadow,
-      borderRadius: BorderRadius.all(Radius.circular(12)));
+  BoxDecoration _buildIndicatorBoxDecoration(bool isActive) =>
+      BoxDecoration(color: isActive ? AppColors.colorStarted : AppColors.colorStartedShadow, borderRadius: BorderRadius.all(Radius.circular(12)));
 
   BoxDecoration get _buildBoxDecoration => BoxDecoration(
-      gradient: RadialGradient(
-          center: const Alignment(0.0, -0.1),
-          radius: 0.77,
-          colors: [AppColors.colorStartedShadow, Colors.white],
-          stops: [0.1, 1.0]));
+      gradient: RadialGradient(center: const Alignment(0.0, -0.1), radius: 0.77, colors: [AppColors.colorStartedShadow, Colors.white], stops: [0.1, 1.0]));
 }

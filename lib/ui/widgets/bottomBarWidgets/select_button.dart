@@ -27,14 +27,10 @@ class _SelectButtonState extends State<SelectButton> {
         child: ClipRRect(
           borderRadius: AppBorderRadius.onboardingBarRadius,
           child: Container(
-            color: widget.onOff
-                ? Theme.of(context).iconTheme.color.withOpacity(0.60)
-                : Colors.transparent,
+            color: widget.onOff ? Theme.of(context).iconTheme.color.withOpacity(0.60) : Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              splashColor: widget.onOff
-                  ? Theme.of(context).iconTheme.color.withOpacity(0.60)
-                  : Colors.transparent,
+              splashColor: widget.onOff ? Theme.of(context).iconTheme.color.withOpacity(0.60) : Colors.transparent,
               borderRadius: AppBorderRadius.onboardingBarRadius,
               child: DottedBorder(
                 borderType: BorderType.RRect,
@@ -43,8 +39,7 @@ class _SelectButtonState extends State<SelectButton> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
                   child: Center(
-                    child: Text(widget.title,
-                        style: Theme.of(context).textTheme.button),
+                    child: Text(widget.title, style: Theme.of(context).textTheme.button),
                   ),
                 ),
               ),

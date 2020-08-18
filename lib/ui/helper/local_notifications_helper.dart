@@ -7,27 +7,18 @@ import 'package:prayertimes/ui/widgets/bottomBarWidgets/notification_dialog.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:rxdart/subjects.dart';
 
-final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
-    BehaviorSubject<ReceivedNotification>();
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
 
-final BehaviorSubject<String> selectNotificationSubject =
-    BehaviorSubject<String>();
+final BehaviorSubject<String> selectNotificationSubject = BehaviorSubject<String>();
 
-Future<void> initNotifications(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
   var initializationSettingsAndroid = AndroidInitializationSettings('logo');
   var initializationSettingsIOS = IOSInitializationSettings(
-    requestAlertPermission: false,
-    requestBadgePermission: false,
-    requestSoundPermission: false,
-    onDidReceiveLocalNotification:
-        (int id, String title, String body, String payload) async {
-      didReceiveLocalNotificationSubject.add(ReceivedNotification(
-          id: id, title: title, body: body, payload: payload));
+    onDidReceiveLocalNotification: (int id, String title, String body, String payload) async {
+      didReceiveLocalNotificationSubject.add(ReceivedNotification(id: id, title: title, body: body, payload: payload));
     },
   );
-  var initializationSettings = InitializationSettings(
-      initializationSettingsAndroid, initializationSettingsIOS);
+  var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
@@ -40,30 +31,14 @@ Future<void> initNotifications(
   );
 }
 
-void requestIOSPermissions(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
-  flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-}
-
 void configureDidReceiveLocalNotificationSubject(BuildContext context) {
   didReceiveLocalNotificationSubject.stream.listen(
     (ReceivedNotification receivedNotification) async {
       await showDialog(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: receivedNotification.title != null
-              ? Text(receivedNotification.title)
-              : null,
-          content: receivedNotification.body != null
-              ? Text(receivedNotification.body)
-              : null,
+          title: receivedNotification.title != null ? Text(receivedNotification.title) : null,
+          content: receivedNotification.body != null ? Text(receivedNotification.body) : null,
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
@@ -104,33 +79,19 @@ void configureSelectNotificationSubject(BuildContext context) {
   );
 }
 
-Future<void> showNotificationData(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    int id,
-    String title,
-    String body,
-    [String payload]) async {
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '2', 'On/Off', 'On/Off Notifications',
-      importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+Future<void> showNotificationData(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, int id, String title, String body, [String payload]) async {
+  var androidPlatformChannelSpecifics =
+      AndroidNotificationDetails('2', 'On/Off', 'On/Off Notifications', importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin
-      .show(id, title, body, platformChannelSpecifics, payload: payload);
+  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.show(id, title, body, platformChannelSpecifics, payload: payload);
 }
 
 Future<void> _schedulePrayerNotificationWithSound(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    int id,
-    String title,
-    String body,
-    DateTime scheduledDate,
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, int id, String title, String body, DateTime scheduledDate,
     [String payload]) async {
-  var time =
-      Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '0', 'Prayer times and ezan', 'Prayer Times And Ezan Notification',
+  var time = Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Prayer times and ezan', 'Prayer Times And Ezan Notification',
       importance: Importance.Max,
       priority: Priority.Max,
       playSound: true,
@@ -141,71 +102,30 @@ Future<void> _schedulePrayerNotificationWithSound(
       visibility: NotificationVisibility.Public,
       category: "Reminder");
   var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'ezan.aiff');
-  var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showDailyAtTime(
-      id, title, body, time, platformChannelSpecifics,
-      payload: payload);
+  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showDailyAtTime(id, title, body, time, platformChannelSpecifics, payload: payload);
 }
 
-Future<void> schedulePrayerNotificationsWithSound(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    List<DateTime> prayerTimes) async {
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      0,
-      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[0],
-      '0');
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      1,
-      LocaleKeys.sun.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.sun.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[1],
-      '1');
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      2,
-      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[2],
-      '2');
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      3,
-      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[3],
-      '3');
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      4,
-      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[4],
-      '4');
-  _schedulePrayerNotificationWithSound(
-      flutterLocalNotificationsPlugin,
-      5,
-      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[5],
-      '5');
+Future<void> schedulePrayerNotificationsWithSound(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, List<DateTime> prayerTimes) async {
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 0, LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[0], '0');
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 1, LocaleKeys.sun.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.sun.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[1], '1');
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 2, LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[2], '2');
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 3, LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[3], '3');
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 4, LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[4], '4');
+  _schedulePrayerNotificationWithSound(flutterLocalNotificationsPlugin, 5, LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[5], '5');
 }
 
 Future<void> _schedulePrayerNotification(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    int id,
-    String title,
-    String body,
-    DateTime scheduledDate,
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, int id, String title, String body, DateTime scheduledDate,
     [String payload]) async {
-  var time =
-      Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      '0', 'Prayer times', 'Prayer Times Notification',
+  var time = Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Prayer times', 'Prayer Times Notification',
       importance: Importance.Max,
       priority: Priority.Max,
       playSound: true,
@@ -215,57 +135,25 @@ Future<void> _schedulePrayerNotification(
       visibility: NotificationVisibility.Public,
       category: "Reminder");
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showDailyAtTime(
-      id, title, body, time, platformChannelSpecifics,
-      payload: payload);
+  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showDailyAtTime(id, title, body, time, platformChannelSpecifics, payload: payload);
 }
 
-Future<void> schedulePrayerNotifications(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    List<DateTime> prayerTimes) async {
-  _schedulePrayerNotification(
-      flutterLocalNotificationsPlugin,
-      0,
-      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[0],
-      '0');
-  _schedulePrayerNotification(
-      flutterLocalNotificationsPlugin,
-      1,
-      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[2],
-      '1');
-  _schedulePrayerNotification(
-      flutterLocalNotificationsPlugin,
-      2,
-      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[3],
-      '2');
-  _schedulePrayerNotification(
-      flutterLocalNotificationsPlugin,
-      3,
-      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[4],
-      '3');
-  _schedulePrayerNotification(
-      flutterLocalNotificationsPlugin,
-      4,
-      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
-      prayerTimes[5],
-      '4');
+Future<void> schedulePrayerNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, List<DateTime> prayerTimes) async {
+  _schedulePrayerNotification(flutterLocalNotificationsPlugin, 0, LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.imsak.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[0], '0');
+  _schedulePrayerNotification(flutterLocalNotificationsPlugin, 1, LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.noon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[2], '1');
+  _schedulePrayerNotification(flutterLocalNotificationsPlugin, 2, LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.afternoon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[3], '2');
+  _schedulePrayerNotification(flutterLocalNotificationsPlugin, 3, LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.evening.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[4], '3');
+  _schedulePrayerNotification(flutterLocalNotificationsPlugin, 4, LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(),
+      LocaleKeys.moon.tr() + ' ' + LocaleKeys.reminder.tr(), prayerTimes[5], '4');
 }
 
-Future<void> checkPendingNotificationRequests(BuildContext context,
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  var pendingNotificationRequests =
-      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+Future<void> checkPendingNotificationRequests(BuildContext context, FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+  var pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -276,9 +164,7 @@ Future<void> checkPendingNotificationRequests(BuildContext context,
           child: ListView.builder(
               itemCount: pendingNotificationRequests.length,
               itemBuilder: (BuildContext context, int i) {
-                return Text(pendingNotificationRequests[i].id.toString() +
-                    ' ' +
-                    pendingNotificationRequests[i].title);
+                return Text(pendingNotificationRequests[i].id.toString() + ' ' + pendingNotificationRequests[i].title);
               }),
         ),
         actions: [
@@ -294,7 +180,6 @@ Future<void> checkPendingNotificationRequests(BuildContext context,
   );
 }
 
-Future<void> turnOffNotifications(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+Future<void> turnOffNotifications(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
   await flutterLocalNotificationsPlugin.cancelAll();
 }

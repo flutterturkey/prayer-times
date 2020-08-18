@@ -8,13 +8,7 @@ class NextPrayerTimeContainer extends StatelessWidget {
   final int hour, minute, second;
   final String nextPrayer;
 
-  const NextPrayerTimeContainer(
-      {Key key,
-      @required this.hour,
-      @required this.minute,
-      @required this.second,
-      @required this.nextPrayer})
-      : super(key: key);
+  const NextPrayerTimeContainer({Key key, @required this.hour, @required this.minute, @required this.second, @required this.nextPrayer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +23,15 @@ class NextPrayerTimeContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              myLocale == AppConstants.TR_LOCALE ? nextPrayer + " " + timeTo : timeTo + " " + nextPrayer,
-                style: Theme.of(context).textTheme.headline6),
+            Text(myLocale == AppConstants.TR_LOCALE ? nextPrayer + " " + timeTo : timeTo + " " + nextPrayer, style: Theme.of(context).textTheme.headline6),
             Helper.sizedBoxH10,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 buildTimeSection(context, LocaleKeys.hour.plural(hour), hour),
-                buildTimeSection(
-                    context, LocaleKeys.minute.plural(minute), minute),
-                buildTimeSection(
-                    context, LocaleKeys.second.plural(second), second),
+                buildTimeSection(context, LocaleKeys.minute.plural(minute), minute),
+                buildTimeSection(context, LocaleKeys.second.plural(second), second),
               ],
             )
           ],

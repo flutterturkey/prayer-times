@@ -1,9 +1,9 @@
 class City {
-  String sehirAdi;
-  String sehirId;
+  String cityName;
+  String cityID;
 
   City({
-    this.sehirAdi,
-    this.sehirId,
+    this.cityName,
+    this.cityID,
   });
 }

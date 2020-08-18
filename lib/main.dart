@@ -7,33 +7,25 @@ import 'package:prayertimes/ui/helper/AppConstants.dart' show AppConstants;
 import 'package:prayertimes/ui/theme/dark_theme.dart' show themeDarkData;
 import 'package:prayertimes/ui/theme/light_theme.dart' show themeLightData;
 import 'package:prayertimes/ui/helper/local_notifications_helper.dart';
-import 'package:provider/provider.dart'
-    show ChangeNotifierProvider, MultiProvider, Provider;
+import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
 
 import 'generated/locale_keys.g.dart';
 import 'models/custom_theme_mode.dart' show CustomThemeMode;
 import 'screens/home_page.dart' show HomePage;
 import 'screens/onboarding_page.dart' show OnboardingPage;
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 NotificationAppLaunchDetails notificationAppLaunchDetails;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  notificationAppLaunchDetails =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   await initNotifications(flutterLocalNotificationsPlugin);
-  requestIOSPermissions(flutterLocalNotificationsPlugin);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     EasyLocalization(
-      supportedLocales: [
-        AppConstants.TR_LOCALE,
-        AppConstants.EN_LOCALE,
-        AppConstants.AR_LOCALE
-      ],
+      supportedLocales: [AppConstants.TR_LOCALE, AppConstants.EN_LOCALE, AppConstants.AR_LOCALE],
       path: AppConstants.LANG_PATH,
       child: MultiProvider(
         providers: [

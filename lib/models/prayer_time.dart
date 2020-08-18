@@ -1,17 +1,17 @@
 class PrayerTime {
   String imsak;
-  String gunes;
-  String ogle;
-  String ikindi;
-  String aksam;
-  String yatsi;
+  String sun;
+  String noon;
+  String afternoon;
+  String evening;
+  String moon;
 
   PrayerTime({
     this.imsak,
-    this.gunes,
-    this.ogle,
-    this.ikindi,
-    this.aksam,
-    this.yatsi,
+    this.sun,
+    this.noon,
+    this.afternoon,
+    this.evening,
+    this.moon,
   });
 }

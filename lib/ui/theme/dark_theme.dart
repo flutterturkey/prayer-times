@@ -15,12 +15,11 @@ final themeDarkData = ThemeData(
   floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: AppColors.colorStarted, elevation: 2),
   iconTheme: IconThemeData(color: AppColors.colorDarkThird, size: 24),
   textTheme: TextTheme(
-    button: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
-    headline3: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
-    headline4: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle, fontSize: 24),
-    headline5: GoogleFonts.openSans(fontWeight: FontWeight.w500, color: AppColors.colorStartedDescription, fontSize: 14),
-    headline6: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
-    subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle, fontSize: 16),
-    subtitle1: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: Color(0xFFF2A365), fontSize: 16)
-  ),
+      button: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
+      headline3: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
+      headline4: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle, fontSize: 24),
+      headline5: GoogleFonts.openSans(fontWeight: FontWeight.w500, color: AppColors.colorStartedDescription, fontSize: 14),
+      headline6: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle),
+      subtitle2: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: AppColors.colorDarkTitle, fontSize: 16),
+      subtitle1: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: Color(0xFFF2A365), fontSize: 16)),
 );

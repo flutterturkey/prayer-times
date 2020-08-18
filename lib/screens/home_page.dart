@@ -10,17 +10,12 @@ import 'package:prayertimes/models/prayer_time.dart';
 import 'package:prayertimes/models/result.dart';
 import 'package:prayertimes/ui/helper/AppConstants.dart';
 import 'package:prayertimes/ui/widgets/app_bar.dart' show CustomAppBar;
-import 'package:prayertimes/ui/widgets/bottomBarWidgets/bottom_bar.dart'
-    show CustomBottomNavigationBar, getAllowSound, getAllowsNotifications;
+import 'package:prayertimes/ui/widgets/bottomBarWidgets/bottom_bar.dart' show CustomBottomNavigationBar, getAllowSound, getAllowsNotifications;
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
-import 'package:prayertimes/ui/widgets/homePageWidgets/iftarTimeContainer.dart'
-    show IftarTimeContanier;
-import 'package:prayertimes/ui/widgets/homePageWidgets/nextPrayerTimeContainer.dart'
-    show NextPrayerTimeContainer;
-import 'package:prayertimes/ui/widgets/homePageWidgets/prayerTimeContainer.dart'
-    show PrayerTimeContainer;
-import 'package:prayertimes/ui/widgets/homePageWidgets/timeContainer.dart'
-    show TimeContainer;
+import 'package:prayertimes/ui/widgets/homePageWidgets/iftarTimeContainer.dart' show IftarTimeContanier;
+import 'package:prayertimes/ui/widgets/homePageWidgets/nextPrayerTimeContainer.dart' show NextPrayerTimeContainer;
+import 'package:prayertimes/ui/widgets/homePageWidgets/prayerTimeContainer.dart' show PrayerTimeContainer;
+import 'package:prayertimes/ui/widgets/homePageWidgets/timeContainer.dart' show TimeContainer;
 import 'package:prayertimes/ui/helper/local_notifications_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,19 +30,9 @@ class _HomePageState extends State<HomePage> {
   final formatTime = DateFormat('HH:mm');
   SharedPreferences prefs;
   Timer timer;
-  int differenceInHoursIftar,
-      differenceInMinutesIftar,
-      differenceInSecIftar,
-      differenceInHoursPrayer,
-      differenceInMinutesPrayer,
-      differenceInSecPrayer;
+  int differenceInHoursIftar, differenceInMinutesIftar, differenceInSecIftar, differenceInHoursPrayer, differenceInMinutesPrayer, differenceInSecPrayer;
   String nextPrayer, id, districtName;
-  DateTime now,
-      nextPrayerTime,
-      prevMoonTime,
-      nextImsakTime,
-      nextIftarTime,
-      iftarTime;
+  DateTime now, nextPrayerTime, prevMoonTime, nextImsakTime, nextIftarTime, iftarTime;
 
   List<PrayerTime> prayerResult = [];
   List<String> prayerTime = [];
@@ -58,13 +43,13 @@ class _HomePageState extends State<HomePage> {
       () {
         prayerResult = _prayerTemp;
         prayerTime.add(prayerResult[0].imsak);
-        prayerTime.add(prayerResult[0].gunes);
-        prayerTime.add(prayerResult[0].ogle);
-        prayerTime.add(prayerResult[0].ikindi);
-        prayerTime.add(prayerResult[0].aksam);
-        prayerTime.add(prayerResult[0].yatsi);
+        prayerTime.add(prayerResult[0].sun);
+        prayerTime.add(prayerResult[0].noon);
+        prayerTime.add(prayerResult[0].afternoon);
+        prayerTime.add(prayerResult[0].evening);
+        prayerTime.add(prayerResult[0].moon);
         prayerTime.add(prayerResult[1].imsak);
-        prayerTime.add(prayerResult[1].aksam);
+        prayerTime.add(prayerResult[1].evening);
 
         fullPrayerTime = [];
         for (var i = 0; i < prayerTime.length; i++) {
@@ -79,13 +64,11 @@ class _HomePageState extends State<HomePage> {
     bool sound = await getAllowSound();
 
     if (not == true && sound == true) {
-      schedulePrayerNotificationsWithSound(
-          flutterLocalNotificationsPlugin, fullPrayerTime);
+      schedulePrayerNotificationsWithSound(flutterLocalNotificationsPlugin, fullPrayerTime);
     } else if (not == false && sound == false) {
       turnOffNotifications(flutterLocalNotificationsPlugin);
     } else {
-      schedulePrayerNotifications(
-          flutterLocalNotificationsPlugin, fullPrayerTime);
+      schedulePrayerNotifications(flutterLocalNotificationsPlugin, fullPrayerTime);
     }
   }
 
@@ -94,8 +77,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     (() async {
       id = await getPref(AppConstants.keyDistrictId, AppConstants.districtID);
-      districtName =
-          await getPref(AppConstants.keyDistrict, AppConstants.districtName);
+      districtName = await getPref(AppConstants.keyDistrict, AppConstants.districtName);
       await _getPrayerTimeData(id);
       hesapla();
       _schedulePrayerNotifications();
@@ -108,17 +90,11 @@ class _HomePageState extends State<HomePage> {
       () {
         now = new DateTime.now();
         for (var i = 0; i < prayerTime.length; i++) {
-          fullPrayerTime.replaceRange(i, i + 1, [
-            DateTime(now.year, now.month, now.day, fullPrayerTime[i].hour,
-                fullPrayerTime[i].minute)
-          ]);
+          fullPrayerTime.replaceRange(i, i + 1, [DateTime(now.year, now.month, now.day, fullPrayerTime[i].hour, fullPrayerTime[i].minute)]);
         }
-        prevMoonTime = DateTime(now.year, now.month, now.day - 1,
-            fullPrayerTime[5].hour, fullPrayerTime[5].minute);
-        nextImsakTime = DateTime(now.year, now.month, now.day + 1,
-            fullPrayerTime[6].hour, fullPrayerTime[6].minute);
-        nextIftarTime = DateTime(now.year, now.month, now.day + 1,
-            fullPrayerTime[7].hour, fullPrayerTime[7].minute);
+        prevMoonTime = DateTime(now.year, now.month, now.day - 1, fullPrayerTime[5].hour, fullPrayerTime[5].minute);
+        nextImsakTime = DateTime(now.year, now.month, now.day + 1, fullPrayerTime[6].hour, fullPrayerTime[6].minute);
+        nextIftarTime = DateTime(now.year, now.month, now.day + 1, fullPrayerTime[7].hour, fullPrayerTime[7].minute);
 
         //Before
         bool imsakBefore = now.isBefore(fullPrayerTime[0]);
@@ -165,20 +141,15 @@ class _HomePageState extends State<HomePage> {
           print("null from the if statment");
           return null;
         }
-        iftarTime = nextIftarBefore && eveningAfter == true
-            ? nextIftarTime
-            : fullPrayerTime[4];
+        iftarTime = nextIftarBefore && eveningAfter == true ? nextIftarTime : fullPrayerTime[4];
 
         differenceInHoursIftar = ((iftarTime.difference(now).inHours) % 24);
         differenceInMinutesIftar = ((iftarTime.difference(now).inMinutes) % 60);
         differenceInSecIftar = ((iftarTime.difference(now).inSeconds) % 60);
 
-        differenceInHoursPrayer =
-            ((nextPrayerTime.difference(now).inHours) % 24);
-        differenceInMinutesPrayer =
-            ((nextPrayerTime.difference(now).inMinutes) % 60);
-        differenceInSecPrayer =
-            ((nextPrayerTime.difference(now).inSeconds) % 60);
+        differenceInHoursPrayer = ((nextPrayerTime.difference(now).inHours) % 24);
+        differenceInMinutesPrayer = ((nextPrayerTime.difference(now).inMinutes) % 60);
+        differenceInSecPrayer = ((nextPrayerTime.difference(now).inSeconds) % 60);
       },
     );
   }
@@ -197,25 +168,17 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                      22, 10, 32, 10), //22, 17, 32, 17
+                  padding: const EdgeInsets.fromLTRB(22, 10, 32, 10), //22, 17, 32, 17
                   child: Column(
                     children: <Widget>[
                       TimeContainer(time: format.format(now)),
                       Helper.sizedBoxH10,
                       NextPrayerTimeContainer(
-                          hour: differenceInHoursPrayer,
-                          minute: differenceInMinutesPrayer,
-                          second: differenceInSecPrayer,
-                          nextPrayer: nextPrayer),
+                          hour: differenceInHoursPrayer, minute: differenceInMinutesPrayer, second: differenceInSecPrayer, nextPrayer: nextPrayer),
                       Helper.sizedBoxH10,
-                      IftarTimeContanier(
-                          hour: differenceInHoursIftar,
-                          minute: differenceInMinutesIftar,
-                          second: differenceInSecIftar),
+                      IftarTimeContanier(hour: differenceInHoursIftar, minute: differenceInMinutesIftar, second: differenceInSecIftar),
                       Helper.sizedBoxH10,
-                      PrayerTimeContainer(
-                          prayerTime: prayerTime, districtName: districtName),
+                      PrayerTimeContainer(prayerTime: prayerTime, districtName: districtName),
                     ],
                   ),
                 ),
@@ -229,9 +192,7 @@ class _HomePageState extends State<HomePage> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(60.0),
-        child: LoadingIndicator(
-            indicatorType: Indicator.ballScaleMultiple,
-            color: Theme.of(context).primaryColor),
+        child: LoadingIndicator(indicatorType: Indicator.ballScaleMultiple, color: Theme.of(context).primaryColor),
       ),
     );
   }

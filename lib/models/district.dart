@@ -1,9 +1,9 @@
 class District {
-  String ilceAdi;
-  String ilceId;
+  String districtName;
+  String districtID;
 
   District({
-    this.ilceAdi,
-    this.ilceId,
+    this.districtName,
+    this.districtID,
   });
 }

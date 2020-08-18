@@ -6,12 +6,7 @@ import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
 class IftarTimeContanier extends StatelessWidget {
   final int hour, minute, second;
 
-  const IftarTimeContanier(
-      {Key key,
-      @required this.hour,
-      @required this.minute,
-      @required this.second})
-      : super(key: key);
+  const IftarTimeContanier({Key key, @required this.hour, @required this.minute, @required this.second}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +19,15 @@ class IftarTimeContanier extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(LocaleKeys.timeToIftar.tr(),
-                style: Theme.of(context).textTheme.headline6),
+            Text(LocaleKeys.timeToIftar.tr(), style: Theme.of(context).textTheme.headline6),
             Helper.sizedBoxH10,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 buildTimeSection(context, LocaleKeys.hour.plural(hour), hour),
-                buildTimeSection(
-                    context, LocaleKeys.minute.plural(minute), minute),
-                buildTimeSection(
-                    context, LocaleKeys.second.plural(second), second),
+                buildTimeSection(context, LocaleKeys.minute.plural(minute), minute),
+                buildTimeSection(context, LocaleKeys.second.plural(second), second),
               ],
             )
           ],

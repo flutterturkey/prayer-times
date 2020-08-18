@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:prayertimes/ui/helper/AppConstants.dart';
 
 import 'city.dart';
 import 'country.dart';
@@ -21,8 +20,8 @@ Future<List<Country>> getCountryData() async {
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       Country _country = new Country(
-        ulkeAdi: data[i]["UlkeAdi"],
-        ulkeId: data[i]["UlkeID"],
+        countryName: data[i]["UlkeAdi"],
+        countryID: data[i]["UlkeID"],
       );
       country.add(_country);
     }
@@ -32,58 +31,55 @@ Future<List<Country>> getCountryData() async {
   return country;
 }
 
-Future<List<City>> getCityData(String ulkeId) async {
+Future<List<City>> getCityData(String countryID) async {
   List<City> city = [];
   try {
-    Response response = await get(cityURL + ulkeId);
+    Response response = await get(cityURL + countryID);
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       City _city = new City(
-        sehirAdi: data[i]["SehirAdi"],
-        sehirId: data[i]["SehirID"],
+        cityName: data[i]["SehirAdi"],
+        cityID: data[i]["SehirID"],
       );
       city.add(_city);
     }
-    AppConstants.countryID = ulkeId;
   } catch (e) {
     print("City Data alınamadı. $e");
   }
   return city;
 }
 
-Future<List<District>> getDistrictData(String sehirId) async {
+Future<List<District>> getDistrictData(String cityID) async {
   List<District> district = [];
   try {
-    Response response = await get(districtURL + sehirId);
+    Response response = await get(districtURL + cityID);
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       District _district = new District(
-        ilceAdi: data[i]["IlceAdi"],
-        ilceId: data[i]["IlceID"],
+        districtName: data[i]["IlceAdi"],
+        districtID: data[i]["IlceID"],
       );
       district.add(_district);
     }
-    AppConstants.cityID = sehirId;
   } catch (e) {
     print("District Data alınamadı. $e");
   }
   return district;
 }
 
-Future<List<PrayerTime>> getPrayerTimeData(String ilceId) async {
+Future<List<PrayerTime>> getPrayerTimeData(String districtID) async {
   List<PrayerTime> prayerTime = [];
   try {
-    Response response = await get(timeURL + ilceId);
+    Response response = await get(timeURL + districtID);
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       PrayerTime _prayerTime = new PrayerTime(
         imsak: data[i]["Imsak"],
-        gunes: data[i]["Gunes"],
-        ogle: data[i]["Ogle"],
-        ikindi: data[i]["Ikindi"],
-        aksam: data[i]["Aksam"],
-        yatsi: data[i]["Yatsi"],
-        //miladiTarihKisaIso8601: data[i]['MiladiTarihKisaIso8601'],
+        sun: data[i]["Gunes"],
+        noon: data[i]["Ogle"],
+        afternoon: data[i]["Ikindi"],
+        evening: data[i]["Aksam"],
+        moon: data[i]["Yatsi"],
       );
       prayerTime.add(_prayerTime);
     }
