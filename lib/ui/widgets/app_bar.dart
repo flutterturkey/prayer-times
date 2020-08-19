@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
+import 'package:prayertimes/generated/locale_keys.g.dart';
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
+import 'package:easy_localization/easy_localization.dart';
 
 import 'appLogo.dart' show AppLogo;
 import 'helper.dart' show Helper;
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: <Widget>[
                 AppLogo(color: Theme.of(context).iconTheme.color, height: 30),
                 Helper.sizedBoxW20,
-                Text(AppStrings.appName, style: Theme.of(context).textTheme.headline4),
+                Text(LocaleKeys.appName.tr(), style: Theme.of(context).textTheme.headline4),
               ],
             ),
           ),
@@ -36,5 +37,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       BoxDecoration(color: Theme.of(context).cardColor, borderRadius: AppBorderRadius.appBarRadius, boxShadow: [AppBoxShadow.materialShadow]);
 
   @override
-  Size get preferredSize => Size.fromHeight(90.0);
+  Size get preferredSize => Size.fromHeight(70.0);
 }

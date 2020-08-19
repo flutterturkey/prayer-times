@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:prayertimes/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:prayertimes/models/onboarding_model.dart' show OnboardingModel;
 import 'package:prayertimes/screens/home_page.dart' show HomePage;
 import 'package:prayertimes/ui/helper/AppColors.dart' show AppColors;
 import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
-import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
 import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
 import 'package:prayertimes/ui/widgets/appLogo.dart' show AppLogo;
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
@@ -47,18 +48,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   List<OnboardingModel> pages = [
     OnboardingModel(
-      title: AppStrings.onboardingTitle1,
-      description: AppStrings.onboardingDescription1,
+      title: LocaleKeys.getStarted.tr(),
+      description: LocaleKeys.onboardingDescription1.tr(),
       icon: AppLogo(color: AppColors.colorLightSecondary, height: 50),
     ),
     OnboardingModel(
-      title: AppStrings.onboardingTitle2,
-      description: AppStrings.onboardingDescription2,
+      title: LocaleKeys.location.tr(),
+      description: LocaleKeys.onboardingDescription2.tr(),
       icon: Icon(AppIcons.location, size: 50, color: AppColors.colorLightSecondary),
     ),
     OnboardingModel(
-      title: AppStrings.onboardingTitle3,
-      description: AppStrings.onboardingDescription3,
+      title: LocaleKeys.notification.tr(),
+      description: LocaleKeys.onboardingDescription3.tr(),
       icon: Icon(AppIcons.notification, size: 50, color: AppColors.colorLightSecondary),
     ),
   ];
@@ -101,8 +102,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: _buildPageIndicator()),
                   _currentPage != pages.length - 1
-                      ? buildButton(context, AppStrings.next, Icons.arrow_forward)
-                      : buildButton(context, AppStrings.start, Icons.check),
+                      ? buildButton(context, LocaleKeys.next.tr(), Icons.arrow_forward)
+                      : buildButton(context, LocaleKeys.start.tr(), Icons.check),
                 ],
               ),
             ),
@@ -155,7 +156,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         buildLoadingContainer(238, Theme.of(context).dividerColor.withOpacity(0.14)),
                         buildLoadingContainer(192, Theme.of(context).dividerColor.withOpacity(0.29)),
                         buildLoadingContainer(140, Theme.of(context).dividerColor),
-                        Container(child: page.icon, height: 50),
+                        Container(child: page.icon, height: 100),
                       ],
                     ),
                     Padding(

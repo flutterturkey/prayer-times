@@ -1,28 +1,31 @@
-import 'package:easy_localization/easy_localization.dart' show EasyLocalization;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
-import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:prayertimes/screens/splash_screen.dart';
-import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
-
 import 'package:prayertimes/ui/helper/AppConstants.dart' show AppConstants;
 import 'package:prayertimes/ui/theme/dark_theme.dart' show themeDarkData;
 import 'package:prayertimes/ui/theme/light_theme.dart' show themeLightData;
+import 'package:prayertimes/ui/helper/local_notifications_helper.dart';
+import 'package:provider/provider.dart' show ChangeNotifierProvider, MultiProvider, Provider;
 
+import 'generated/locale_keys.g.dart';
 import 'models/custom_theme_mode.dart' show CustomThemeMode;
 import 'screens/home_page.dart' show HomePage;
 import 'screens/onboarding_page.dart' show OnboardingPage;
-import 'ui/helper/AppStrings.dart' show AppStrings;
 
-void main() async {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+NotificationAppLaunchDetails notificationAppLaunchDetails;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  await initNotifications(flutterLocalNotificationsPlugin);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     EasyLocalization(
-      supportedLocales: [
-        AppConstants.TR_LOCALE,
-        AppConstants.EN_LOCALE,
-      ],
+      supportedLocales: [AppConstants.TR_LOCALE, AppConstants.EN_LOCALE, AppConstants.AR_LOCALE],
       path: AppConstants.LANG_PATH,
       child: MultiProvider(
         providers: [
@@ -37,13 +40,15 @@ void main() async {
 class PrayerTimes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('tr'); //TODO: create AppConstant.languageCode for locale and set 
     return MaterialApp(
-      title: AppStrings.appName,
+      title: LocaleKeys.appName.tr(),
       theme: themeLightData,
       darkTheme: themeDarkData,
       themeMode: Provider.of<CustomThemeMode>(context).getThemeMode,
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       initialRoute: '/splash',
       routes: {
         '/splash': (context) => CustomSplashScreen(),

@@ -50,5 +50,3 @@ class _SelectButtonState extends State<SelectButton> {
     );
   }
 }
-
-/*(minWidth: 88.0, minHeight: 36.0),*/

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show BuildContext, Color, Key, StatelessWidget, Widget, required;
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
-import 'package:prayertimes/ui/helper/AppStrings.dart' show AppStrings;
+import 'package:prayertimes/ui/helper/AppConstants.dart';
 
 class AppLogo extends StatelessWidget {
   final double height;
@@ -9,6 +9,6 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(AppStrings.logoPath, height: height, color: color);
+    return SvgPicture.asset(AppConstants.logoPath, height: height, color: color);
   }
 }
