@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(60.0),
-        child: LoadingIndicator(indicatorType: Indicator.ballScaleMultiple, color: Theme.of(context).primaryColor),
+        child: LoadingIndicator(indicatorType: Indicator.ballScaleMultiple, backgroundColor: Theme.of(context).primaryColor),
       ),
     );
   }
