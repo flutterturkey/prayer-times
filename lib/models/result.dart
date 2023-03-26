@@ -16,7 +16,7 @@ final String timeURL = baseUrl + 'vakitler?ilce=';
 Future<List<Country>> getCountryData() async {
   List<Country> country = [];
   try {
-    Response response = await get(countryURL);
+    Response response = await get(Uri.parse(countryURL));
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       Country _country = new Country(
@@ -34,7 +34,7 @@ Future<List<Country>> getCountryData() async {
 Future<List<City>> getCityData(String countryID) async {
   List<City> city = [];
   try {
-    Response response = await get(cityURL + countryID);
+    Response response = await get(Uri.parse(cityURL + countryID));
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       City _city = new City(
@@ -52,7 +52,7 @@ Future<List<City>> getCityData(String countryID) async {
 Future<List<District>> getDistrictData(String cityID) async {
   List<District> district = [];
   try {
-    Response response = await get(districtURL + cityID);
+    Response response = await get(Uri.parse(districtURL + cityID));
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       District _district = new District(
@@ -70,7 +70,7 @@ Future<List<District>> getDistrictData(String cityID) async {
 Future<List<PrayerTime>> getPrayerTimeData(String districtID) async {
   List<PrayerTime> prayerTime = [];
   try {
-    Response response = await get(timeURL + districtID);
+    Response response = await get(Uri.parse(timeURL + districtID));
     List data = jsonDecode(response.body);
     for (int i = 0; i < data.length; i++) {
       PrayerTime _prayerTime = new PrayerTime(

@@ -55,7 +55,7 @@ class NotificationDailog extends StatelessWidget {
         ),
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(LocaleKeys.cancel.tr()),
           onPressed: () {
             Navigator.of(context).pop();

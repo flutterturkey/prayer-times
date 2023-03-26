@@ -18,7 +18,7 @@ Future<void> initNotifications(FlutterLocalNotificationsPlugin flutterLocalNotif
       didReceiveLocalNotificationSubject.add(ReceivedNotification(id: id, title: title, body: body, payload: payload));
     },
   );
-  var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+  var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
@@ -81,9 +81,9 @@ void configureSelectNotificationSubject(BuildContext context) {
 
 Future<void> showNotificationData(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, int id, String title, String body, [String payload]) async {
   var androidPlatformChannelSpecifics =
-      AndroidNotificationDetails('2', 'On/Off', 'On/Off Notifications', importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+      AndroidNotificationDetails('2', 'On/Off', 'On/Off Notifications', importance: Importance.max, priority: Priority.high, ticker: 'ticker');
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.show(id, title, body, platformChannelSpecifics, payload: payload);
 }
 
@@ -92,17 +92,17 @@ Future<void> _schedulePrayerNotificationWithSound(
     [String payload]) async {
   var time = Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Prayer times and ezan', 'Prayer Times And Ezan Notification',
-      importance: Importance.Max,
-      priority: Priority.Max,
+      importance: Importance.max,
+      priority: Priority.max,
       playSound: true,
       sound: RawResourceAndroidNotificationSound('ezan'),
       enableVibration: true,
       channelShowBadge: true,
       enableLights: true,
-      visibility: NotificationVisibility.Public,
+      visibility: NotificationVisibility.public,
       category: "Reminder");
   var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'ezan.aiff');
-  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.showDailyAtTime(id, title, body, time, platformChannelSpecifics, payload: payload);
 }
 
@@ -126,16 +126,16 @@ Future<void> _schedulePrayerNotification(
     [String payload]) async {
   var time = Time(scheduledDate.hour, scheduledDate.minute, scheduledDate.second);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('0', 'Prayer times', 'Prayer Times Notification',
-      importance: Importance.Max,
-      priority: Priority.Max,
+      importance: Importance.max,
+      priority: Priority.max,
       playSound: true,
       enableVibration: true,
       channelShowBadge: true,
       enableLights: true,
-      visibility: NotificationVisibility.Public,
+      visibility: NotificationVisibility.public,
       category: "Reminder");
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.showDailyAtTime(id, title, body, time, platformChannelSpecifics, payload: payload);
 }
 
@@ -168,7 +168,7 @@ Future<void> checkPendingNotificationRequests(BuildContext context, FlutterLocal
               }),
         ),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.of(context).pop();
