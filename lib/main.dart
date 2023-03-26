@@ -22,6 +22,7 @@ Future<void> main() async {
 
   notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   await initNotifications(flutterLocalNotificationsPlugin);
+  await EasyLocalization.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     EasyLocalization(
@@ -29,7 +30,7 @@ Future<void> main() async {
       path: AppConstants.LANG_PATH,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider(builder: (context) => CustomThemeMode()),
+          ChangeNotifierProvider<CustomThemeMode>(create: (_) => CustomThemeMode()),
         ],
         child: PrayerTimes(),
       ),

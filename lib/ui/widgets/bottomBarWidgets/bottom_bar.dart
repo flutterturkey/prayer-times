@@ -1,23 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart' show TextFieldConfiguration, TypeAheadFormField;
 import 'package:prayertimes/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:prayertimes/models/city.dart';
 import 'package:prayertimes/models/country.dart';
 import 'package:prayertimes/models/custom_theme_mode.dart' show CustomThemeMode;
 import 'package:prayertimes/models/district.dart';
+import 'package:prayertimes/models/result.dart';
 import 'package:prayertimes/screens/home_page.dart';
 import 'package:prayertimes/ui/helper/AppConstants.dart';
+import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
+import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
+import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
 import 'package:prayertimes/ui/widgets/bottomBarWidgets/select_button.dart';
 import 'package:prayertimes/ui/widgets/helper.dart' show Helper;
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
-
-import 'package:prayertimes/models/result.dart';
-import 'package:prayertimes/ui/helper/AppIcons.dart' show AppIcons;
-import 'package:prayertimes/ui/styles/appBorderRadius.dart' show AppBorderRadius;
-import 'package:prayertimes/ui/styles/appBoxShadow.dart' show AppBoxShadow;
 
 import '../../../main.dart';
 import '../../helper/local_notifications_helper.dart';
@@ -169,11 +168,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        FlatButton(shape: AppBorderRadius.alertDialogRadius, child: Text(LocaleKeys.cancel.tr()), onPressed: () => clickCancelBtn()),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                                shape: AppBorderRadius.alertDialogRadius
+                            ),
+                            child: Text(LocaleKeys.cancel.tr()),
+                            onPressed: () => clickCancelBtn()),
                         Helper.sizedBoxW10,
-                        FlatButton(
-                          color: Theme.of(context).iconTheme.color.withOpacity(0.60),
-                          shape: AppBorderRadius.alertDialogRadius,
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            shape: AppBorderRadius.alertDialogRadius,
+                            iconColor: Theme.of(context).iconTheme.color.withOpacity(0.60)
+                          ),
                           child: Text(LocaleKeys.add.tr()),
                           onPressed: () => clickAddBtn(),
                         ),
@@ -382,13 +388,16 @@ class _BuildNotificationButtonState extends State<BuildNotificationButton> {
     );
   }
 
-  FlatButton get buildDoneButton {
-    return FlatButton(
-      color: Theme.of(context).iconTheme.color.withOpacity(0.60),
-      shape: AppBorderRadius.alertDialogRadius,
+  TextButton get buildDoneButton {
+    return TextButton(
+      style: TextButton.styleFrom(
+          shape: AppBorderRadius.alertDialogRadius,
+          iconColor: Theme.of(context).iconTheme.color.withOpacity(0.60)
+      ),
       child: Text(LocaleKeys.done.tr()),
       onPressed: () => clickDoneBtn(),
     );
+
   }
 
   void clickDoneBtn() {
